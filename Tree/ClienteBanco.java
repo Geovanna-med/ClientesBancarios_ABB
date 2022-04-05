@@ -1,20 +1,32 @@
-import java.sql.Date;
+import java.lang.Comparable;
+import java.util.UUID;
+import java.math.BigInteger;
+import java.util.Random;
 
-public class ClienteBanco {
+public class ClienteBanco implements Comparable<ClienteBanco> {
+
+    Random random = new Random();
 
     private int numCliente;
+
+    public ClienteBanco(int numCliente) {
+        this.numCliente = numCliente;
+    }
+
     private String nombre;
     private int numCuenta;
     private String telefono;
     private double saldo;
-    private Date fechaRegistro;
+    private String fechaRegistro;
 
-    public ClienteBanco(int numCliente, int numCuenta, String telefono, double saldo, Date fechaRegistro) {
-        this.numCliente = numCliente;
-        this.numCuenta = numCuenta;
+    public ClienteBanco(String nombre, String telefono,
+            String string) {
+        this.nombre = nombre;
+        this.numCliente = random.nextInt();
+        this.numCuenta = random.nextInt();
         this.telefono = telefono;
-        this.saldo = saldo;
-        this.fechaRegistro = fechaRegistro;
+        this.saldo = 0;
+        this.fechaRegistro = string;
     }
 
     public String getNombre() {
@@ -57,12 +69,29 @@ public class ClienteBanco {
         this.saldo = saldo;
     }
 
-    public Date getFechaRegistro() {
+    public String getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(String fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
+    public int compareTo(ClienteBanco cliente) {
+        if (this.getClass() == ClienteBanco.class) {
+            if (cliente instanceof ClienteBanco) {
+                if (this.numCliente == cliente.numCliente) {
+                    return 0;
+                } else if (this.numCliente > cliente.numCliente) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            } else {
+                return -1;
+            }
+        }
+        return numCliente;
+
+    }
 }

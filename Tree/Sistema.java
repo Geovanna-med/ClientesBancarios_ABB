@@ -1,8 +1,11 @@
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
+import dataStructure.*;
 
 public class Sistema {
+
+    Tree<ClienteBanco> tree = new Tree<>();
 
     public String newCliente() {
         Scanner scan = new Scanner(System.in);
@@ -22,10 +25,10 @@ public class Sistema {
         return infoUsers;
     }
 
-    public void obtenerHoraRegistro() { // imprime la hora actual
+    public String obtenerHoraRegistro() { // imprime la hora actual
         String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
-        System.out.println(timeStamp);
+        return timeStamp;
     }
 
     public void menu() {
@@ -47,23 +50,71 @@ public class Sistema {
                 case 0:
                     return;
                 case 1:
-                    String infoCliente = newCliente();
-                    String[] infoSeparada = infoCliente.split("/");
-                    System.out.println("\n");
-                    System.out.println("Nombre del cliente: " + infoSeparada[0]);
-                    System.out.println("Telefono del cliente: " + infoSeparada[1]);
-                    System.out.println("Fecha de registro: ");
-                    obtenerHoraRegistro();
-
+                    darAltaCliente();
                     break;
                 case 2:
-                    System.out.println("Generando .csv");
+                    actualizarCliente();
                     break;
                 case 3:
                     System.out.println("Generando .pdf");
                     break;
             }
+            sc.close();
         }
+    }
+
+    public void darAltaCliente() {
+
+        String infoCliente = newCliente();
+        String[] infoSeparada = infoCliente.split("/");
+        System.out.println("\n");
+        System.out.println("Nombre del cliente: " + infoSeparada[0]);
+        System.out.println("Telefono del cliente: " + infoSeparada[1]);
+        System.out.println("Fecha y hora de registro: " + obtenerHoraRegistro());
+
+        ClienteBanco cliente = new ClienteBanco(infoSeparada[0], infoSeparada[1],
+                obtenerHoraRegistro());
+
+        tree.insert(cliente);
+        System.out.println(cliente.toString());
+
+    }
+
+    public void actualizarCliente() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Escriba el numero de cliente: ");
+        int numCliente = sc.nextInt();
+
+        ClienteBanco cliente = new ClienteBanco(numCliente);
+
+        tree.find(cliente);
+        String menu = ("|---Actualizar informacion---|\n" +
+                "| 0. Salir                   |\n" +
+                "| 1. Telefono                |\n" +
+                "|----------------------------|");
+
+        while (true) {
+            System.out.println("Elija la informacion que desea actualizar");
+            System.out.println(menu);
+            int seleccion = sc.nextInt();
+            sc.nextLine();
+            switch (seleccion) {
+                case 0:
+                    return;
+                case 1:
+                    System.out.println("Ingrese el nuevo telefono");
+                    String newTelefono = sc.nextLine();
+                    cliente.setTelefono(newTelefono);
+                    break;
+            }
+        }
+
+    }
+
+    public void eliminarCliente() {
+        // tree.deleteRec(null, null)
+
     }
 
 }

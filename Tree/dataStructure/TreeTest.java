@@ -18,4 +18,8 @@ public class TreeTest {
         tree.traverse(3);
     }
 
+    // Pre order: Raiz - Izquierdo - Derecho
+    // In order: Izquierda - Raiz - Derecha
+    // Post Order: Raiz - Derecha Izquierda
+
 }

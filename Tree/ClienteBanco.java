@@ -29,6 +29,9 @@ public class ClienteBanco implements Comparable<ClienteBanco> {
         this.fechaRegistro = string;
     }
 
+    public ClienteBanco(int numCliente2, int numCuenta2) {
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -75,6 +78,12 @@ public class ClienteBanco implements Comparable<ClienteBanco> {
 
     public void setFechaRegistro(String fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "numero de cliente: " + numCliente + " || Numero de cuenta: " + numCuenta;
     }
 
     public int compareTo(ClienteBanco cliente) {

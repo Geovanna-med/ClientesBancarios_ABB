@@ -29,7 +29,7 @@ public class Tree<T extends Comparable<T>> {
         return current;
     }
 
-    void deleteKey(T data) {
+    public void deleteKey(T data) {
         root = deleteRec(root, data);
     }
 
